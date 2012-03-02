@@ -12,6 +12,9 @@ class sun_java_6 {
     notify => Exec["apt-get-update"],
   }
 
+  apt::ppa { "ppa:ferramroberto/java": 
+  }
+
   exec { "apt-get-update":
     command => "/usr/bin/apt-get update",
     refreshonly => true,
@@ -35,12 +38,12 @@ class sun_java_6 {
 
   package { "sun-java6-jdk":
     ensure => latest,
-    require => [ File["partner.list"], Exec["agree-to-jdk-license"], Exec["apt-get-update"] ],
+    require => [ File["partner.list"], Apt::Ppa["ppa:ferramroberto/java"], Exec["agree-to-jdk-license"], Exec["apt-get-update"] ],
   }
 
   package { "sun-java6-jre":
     ensure => latest,
-    require => [ File["partner.list"], Exec["agree-to-jre-license"], Exec["apt-get-update"] ],
+    require => [ File["partner.list"], Apt::Ppa["ppa:ferramroberto/java"], Exec["agree-to-jre-license"], Exec["apt-get-update"] ],
   }
 
 }
